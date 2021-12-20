@@ -151,7 +151,7 @@ body{
 {
   padding:2rem;
   padding-top: 1rem;
-  height:15rem;
+  height:16.8rem;
   width:25rem;
   margin:10rem auto;
 }
@@ -192,4 +192,72 @@ body{
 {
   width:50rem;
 }
+
+.urlpage
+{
+  display:flex;
+  flex-wrap: wrap;
+  gap:3rem;
+  margin:2rem 2rem;
+  margin-left:6rem;
+}
+.indurl
+{
+
+word-break: break-word;
+box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
+-webkit-box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
+-moz-box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
+width:30rem !important;
+height:fit-content;
+
+}
+
+.urlpage
+{
+  animation:transitionIn 0.75s;
+}
+
+/* .info
+{
+  margin-left:16rem !important;
+  margin-top: -2rem !important;
+} */
+
+.monthusage
+{
+  text-align: right;
+  margin-right:3rem;
+  margin-top:1rem;
+}
+.indurl  a
+{
+  color:greenyellow;
+  text-decoration:none;
+}
+.indurl  a:hover
+{
+  color:white;
+}
+
+.urldetails
+{
+  padding: 1rem;
+}
+
+@keyframes transitionIn {
+
+  from{
+    opacity:0;
+    transform:rotateX(-10deg);
+  }
+  to{
+    opacity:1;
+    transform:rotateX(0);
+  }
+  
+}
+
+
+
 

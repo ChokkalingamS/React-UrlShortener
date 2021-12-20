@@ -1,3 +1,4 @@
+
 import './App.css';
 import{Switch,Link,Route,useHistory,useParams,Redirect} from "react-router-dom";
 import axios from "axios";
@@ -5,14 +6,19 @@ import {useState,useContext,createContext,useEffect} from "react";
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 
-
+// Material UI
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from '@mui/material/Button';
+
+// Card
 import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+
 import TextField from '@mui/material/TextField';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import IconButton from '@mui/material/IconButton';
@@ -21,23 +27,24 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import InfoIcon from '@mui/icons-material/Info';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+
 import Checkbox from '@mui/material/Checkbox';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InputGroup} from 'react-bootstrap';
+import DeleteIcon from '@mui/icons-material/Delete';
 
+// Dialog Box
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 import {forwardRef} from "react";
 
-import { SnackbarProvider, useSnackbar } from 'notistack';
-
+// More Info
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 // Dark Mode
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -45,7 +52,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { createTheme, ThemeProvider } from '@mui/material/styles';  
 import Paper from '@mui/material/Paper';
 
-
+// Stack Bar
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -54,23 +61,22 @@ import MuiAlert from '@mui/material/Alert';
 export default function App()
 {
  
-  return (<div> <Container/>
-
-  </div> )
+  return <div> <Container/></div> 
         
 }
+
+// Server
 const URL=`http://localhost:1000/users`
 const context=createContext('')
 
 function Container()
 {
-    const [Mailid,setMailid]=useState('');
-    const [Password,setPassword]=useState('');
     const [token,setToken]=useState('')
     const [result,setResult]=useState(null)
     const [Statuscode,setStatuscode]=useState(null)
     const [Status,setStatus]=useState('Offline')
-    
+   
+console.log(Status);
     const history=useHistory()
     // Profile UserName
     const [Name,setName]=useState(null)
@@ -83,13 +89,13 @@ function Container()
       palette: {mode:themeChange},
     });
 
-    let obj={history,token,setToken,result,setResult,Statuscode,setStatuscode,Status,setStatus,Name,setName}
+    let obj={history,token,setToken,result,setResult,Statuscode,setStatuscode,Status,setStatus,Name,setName,themeChange}
 
     return (<div className="Body">
         <context.Provider value={obj}>
         <Switch>
             <Route exact path='/'><Login/></Route>
-            <Route path='/signup'><SnackbarProvider maxSnack={3}><Signup/></SnackbarProvider></Route>
+            <Route path='/signup'><Signup/></Route>
             <Route path='/forgotpassword'><Forgotpassword/></Route>
             <Route path='/changepassword/:id'><Changepassword/></Route>
             <Route path='/vermessage'><Message msg='Account Activated'/></Route>
@@ -100,8 +106,8 @@ function Container()
             <ThemeProvider theme={theme}>
                 <Paper elevation={0} style={{borderStyle:"none",minHeight:"100vh"}}>
             <Navbar themeIcon={themeIcon}/>
-            <Route exact path='/Dashboard'>{(Statuscode===200||Status==='Online')?<Dashboard/>:<Redirect to={'/'}/> }</Route>
-            <Route path='/Dashboard/userdata'>{(Statuscode===200||Status==='Online')?<Userdatas/>:<Redirect to={'/'}/> }</Route>
+            <Route exact path='/Dashboard'>{(Statuscode===200&&Status==='Online')?<Dashboard/>:<Redirect to={'/'}/> }</Route>
+            <Route path='/Dashboard/userdata'>{(Statuscode===200&&Status==='Online')?<Userdatas/>:<Redirect to={'/'}/> }</Route>
             </Paper>
             </ThemeProvider>
             </>
@@ -113,7 +119,7 @@ function Container()
 
 function Navbar({themeIcon})
 {
-    const {Name,setName}=useContext(context)
+    const {Name,setStatus}=useContext(context)
     // console.log(Name);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -137,7 +143,7 @@ function Navbar({themeIcon})
         MenuListProps={{'aria-labelledby': 'basic-button',}}>
           <MenuItem>My Profile</MenuItem>
           {/* {(Name)?<MenuItem>Status:{Name.Status}  <InsertEmoticonIcon style={{fill:'gold'}}/></MenuItem>:''} */}
-        <MenuItem onClick={()=>{window.location.reload(false);handleClose()}}>Log Out</MenuItem>
+        <MenuItem onClick={()=>{window.location.reload(false);handleClose();localStorage.clear();setStatus('Offline')}}>Log Out</MenuItem>
         </Menu>
         {themeIcon}
         </Typography>
@@ -150,6 +156,8 @@ function Navbar({themeIcon})
 function Signup()
 {
     const {history}=useContext(context)
+    const [progress,setProgress]=useState(0)
+    
     // Server Error Message
     const [Message,setMessage]=useState('')
     const [open, setOpen] = useState(false);
@@ -163,8 +171,8 @@ function Signup()
     let validation=yup.object({
       Firstname:yup.string().required('Required Field'),
       Lastname:yup.string().required('Required Field'),
-      Username:yup.string().typeError(Message).required('Required Field'),
-      Mailid:yup.string().typeError(Message).required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email'),
+      Username:yup.string().required('Required Field'),
+      Mailid:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email'),
       Password:yup.string().min(8,'Minimum 8 Characters Required').required('Required Field')
     })
 
@@ -172,7 +180,7 @@ function Signup()
       {
         initialValues:{Firstname:'',Lastname:'',Username:'',Mailid:'',Password:''},
         validationSchema:validation,
-        onSubmit:(newUser)=>signUp(newUser)
+        onSubmit:(newUser)=>{signUp(newUser);setProgress(1)}
       }
     )
 
@@ -185,16 +193,6 @@ function Signup()
         setText((text)=>(text==='Show')?'Hide':'Show')
     }
     
-    // SnackBar
-    
-    // const { enqueueSnackbar } = useSnackbar();
-    // const handleClickVariant = (variant) => () => {
-    //   enqueueSnackbar(Message, { variant });
-    // };
-
- 
-  
-    
     // API Request
     const signUp=(newUser)=>{
       setMessage(()=>'')
@@ -203,22 +201,21 @@ function Signup()
                 method:'POST',
                 data:newUser,    
             }).then((x)=>{setMessage({msg:x.data,result:'success'})})
-            .catch((error)=>(setMessage({msg:error.response.data,result:'error'}))).then(handleClick)
+            .catch((error)=>(setMessage({msg:error.response.data,result:'error'}))).then(handleClick).then(()=>setProgress(0))
     }
   
-    if(Message)
-    {
-      console.log(Message);
-    }
     
+    const loadingstyle={marginLeft:'47rem',marginBottom:'-32rem',marginTop:'0rem',position:"absolute",zindex:1} 
+
     return (<div className="signup">
-              
+              {(progress===1)&&<CircularProgress style={loadingstyle} color='success'></CircularProgress>}
             <div  className='headingcontainer'>
                 <p className='heading' >U R L S H O R T E N E R</p>
                 <p className='subheading'>Simplify your links, customize & manage them</p>
-                {/* <img src='https://free-url-shortener.rb.gy/open-graph.png' style={{height:'10rem',width:'10rem'}} alt='logo'></img> */}
-                {/* <img src='https://i.gifer.com/YCZH.gif' style={{height:'20rem',width:'50rem'}} alt='logo'></img> */}
             </div>
+
+            
+
             <Card className='signupcontainer'>
             <form onSubmit={handleSubmit}>
             
@@ -255,7 +252,7 @@ function Signup()
             </div>
             </Card>
 
-            <Stack spacing={2} sx={{ width: '100%' }} key={'bottom' +'right'}>
+            <Stack spacing={2} sx={{ width: '100%' }} >
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >
            <Alert severity={Message.result} sx={{ width: '100%' }}>
            {Message.msg}
@@ -272,6 +269,9 @@ function Login()
 {
     const {history,token,setToken,result,setResult,Statuscode,setStatuscode,Status,setStatus}=useContext(context);
 
+    useEffect(()=>{setStatus('Offline');setResult('')},[])
+    console.log(result);
+
     const [Message,setMessage]=useState('')
     const [open, setOpen] = useState(false);
     const Alert = forwardRef(function Alert(props, ref) {
@@ -280,7 +280,7 @@ function Login()
     const handleClick = () => {setOpen(true);};
     const handleClose = () => {setOpen(false);};
     
-    
+    console.log(token);
 
   let validation=yup.object({
     Mailid:yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email').required('Required Field'),
@@ -293,14 +293,6 @@ function Login()
     onSubmit:(userData)=>login(userData)
   })
 
-  // onClick={()=>login(userData)}
-
-
-    // const [Mailid,setMailid]=useState('');
-    // const [Password,setPassword]=useState('');
-   
-    // const userData={Mailid,Password};
-
     // Password
     const [text,setText]=useState('Show')
     const [visible,setVisible]=useState('password')
@@ -309,9 +301,7 @@ function Login()
         setVisible((visible)=>(visible==='password')?'text':'password');
         setText((text)=>(text==='Show')?'Hide':'Show')
     }
-    // const reload=()=> window.location.reload(true)
-    // // reload()
-    // useEffect(()=> reload,[true])
+
     
     const login=(userData)=>{
         axios({
@@ -393,9 +383,7 @@ function Forgotpassword()
   const handleClose = () => {setOpen(false);};
 
 
-    const {history,result}=useContext(context);
-    // const [Mailid,setMailid]=useState('');
-    // const userData={Mailid}
+    const {history}=useContext(context);
 
   let validation=yup.object({
     Mailid:yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email').required('Required Field')
@@ -416,10 +404,6 @@ function Forgotpassword()
         }).then((x)=>{setMessage({msg:x.data,result:'success'})}).then(()=>history.push('/message'))
         .catch((error)=>(setMessage({msg:error.response.data,result:'error'}))).then(handleClick)
     }
-    
-    
-    // .then((response)=>console.log(response))
-// console.log('forgotpassword',result);
 
     return (<div className='forgotcontainer'>
            <Card className="forgotpassword">
@@ -448,7 +432,8 @@ function Forgotpassword()
 function Changepassword()
 {
 
-  
+  const [progress,setProgress]=useState(0)
+   
   const {id:token}=useParams()
   const {history}=useContext(context);
 
@@ -468,7 +453,7 @@ function Changepassword()
   const{handleSubmit,handleChange,handleBlur,errors,values,touched}=useFormik({
     initialValues:{Password:'',token},
     validationSchema:validation,
-    onSubmit:(userData)=>changepassword(userData)
+    onSubmit:(userData)=>{changepassword(userData);setProgress(1)}
   })
 
 
@@ -481,11 +466,6 @@ function Changepassword()
         setText((text)=>(text==='Show')?'Hide':'Show')
     }
 
-    // Popup
-    // const [open, setOpen] = useState(false);
-    // const handleClickOpen = () => {setOpen(true);};
-    // console.log(token);
-
     // Change Password
     const changepassword=(userData)=>{
         axios({
@@ -494,10 +474,17 @@ function Changepassword()
             data:userData,
     }).then((x)=>{setMessage({msg:x.data,result:'success'})})
     .catch((error)=>(setMessage({msg:error.response.data,result:'error'}))).then(handleClick)
-    .then(()=>(Message.result==='success')&&setTimeout(() => {history.push('/')}, 4000))
+    
     }
 
-
+    if(Message.result==='success')
+    {
+      
+      setTimeout(() => {
+        history.push('/')
+      }, 6000);
+    }
+    const loadingstyle={marginLeft:'41rem',marginBottom:'32rem',marginTop:'-13.5rem',position:"absolute",zindex:1} 
 
 
     // .then(()=>handleClickOpen())
@@ -523,7 +510,7 @@ function Changepassword()
         <Button type='submit'  variant="contained" fullWidth className='changepasswordbutton' color='warning'>Change Password</Button>
         </form>
         </Card>
-
+        {(progress===1)&&<CircularProgress style={loadingstyle} color='warning'></CircularProgress>}
           {/* Snack Bar */}
           <Stack spacing={2} sx={{ width: '100%' }} >
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >
@@ -532,13 +519,6 @@ function Changepassword()
            </Alert>
           </Snackbar>
           </Stack>
-
-        {/* <Dialog open={open} keepMounted>
-        <DialogTitle>Message <InfoIcon/></DialogTitle>
-        <DialogContent>
-        <DialogContentText>Password Changed Successfully</DialogContentText>
-        </DialogContent>
-        </Dialog> */}
     </div>)
 }
 
@@ -576,7 +556,14 @@ function Dashboard()
         onSubmit:(urlData)=>callDB(urlData)
       })
       
+      // Tooltip
       const [text,setText]=useState('Copy')// URL Copy
+      const copy=()=>{
+        setTimeout(() => {
+          setText('Copy')
+        }, 1000);
+      }
+
       const getToken=localStorage.getItem('token')  // Local Storage
       const label = { inputProps: { 'aria-label': 'Checkbox demo' } }; // Check Box
       
@@ -638,7 +625,7 @@ function Dashboard()
                InputProps={{
                   endAdornment: ( <InputAdornment>
                   <Tooltip title={text}>
-                    <IconButton onClick={()=>{navigator.clipboard.writeText(shortUrl);setText((text)=>(text==='Copy')?'Copied':'Copy')}}>
+                    <IconButton onClick={()=>{navigator.clipboard.writeText(shortUrl);setText((text)=>(text==='Copy')&&'Copied');copy()}}>
                       <ContentCopyIcon/>
                     </IconButton>
                     </Tooltip>
@@ -665,10 +652,25 @@ function Dashboard()
 
 function Userdatas()
 {
+  const{themeChange}=useContext(context)
+
+  // Server Message
+  const [Message,setMessage]=useState('')
+  const [open, setOpen] = useState(false);
+  const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const handleClick = () => {setOpen(true);};
+  const handleClose = () => {setOpen(false);};
+
+
     const getToken=localStorage.getItem('token')
     const [userData,setUserData]=useState([])
+  
     
-    const styles={marginLeft:'40rem',marginTop:'14rem'}
+    const loadingstyle={marginLeft:'35rem',marginTop:'5rem'} //  Loading
+    const linkstyle= {color:(themeChange==='light')&&'#1976d2'}
+
     const getData=()=>{
         axios({
             url:`${URL}/userdata`,
@@ -677,25 +679,96 @@ function Userdatas()
           }).then((response)=>response).then(({data})=>setUserData(data))
     }
     useEffect(getData,[getToken])
-  return (<div className="urlpage">
-      {(userData.length===0)?<div><p>Currently No URL Available</p>
-         <CircularProgress style={styles}></CircularProgress></div>:userData.map(({longUrl,shortUrl,_id})=>{
-          return(<div key={_id}>
-          <p>LongUrl:<a href={longUrl} target="_blank" rel="noreferrer">{longUrl}</a></p>
-          <p>ShortUrl:<a href={shortUrl} target="_blank" rel="noreferrer">{shortUrl}</a></p>
-          </div>)
+  
+    // URL Delete
+    const remove=(_id)=>{
+      axios({
+        url:`http://localhost:1000/urlmaker/deleteurl/${_id}`,
+        method:'DELETE'
+    }).then((response)=>response).then(({data})=>setMessage({msg:data.Msg,result:'success'}))
+    .catch((error)=>setMessage({msg:error.response.data.Msg,result:'error'}))
+    .then(()=>getData()).then(handleClick)
+    }
+
+
+  return (<div>
+         <div className='monthusage'><p>Monthly Usage : {Math.ceil(userData.length*(1/30))}</p></div>
+         <div className="urlpage">   
+      {(userData.length===0)?<div><p>Loading...</p>
+         <CircularProgress style={loadingstyle}></CircularProgress></div>:userData.map(({longUrl,shortUrl,_id,createdAt,usedCount})=>{
+          return(<Card sx={{ maxWidth: 345 }} className='indurl' key={_id} >
+          <CardActionArea>
+            
+            <CardContent>
+              {/* <Typography gutterBottom  component="div">
+              <p>ShortUrl:<a href={shortUrl} target="_blank" rel="noreferrer">{shortUrl}</a></p>
+              </Typography> */}
+              <Typography variant="body2" color="text.secondary">
+                <label><b>URL</b></label><br/><br/>
+              <p><a style={linkstyle} href={longUrl} target="_blank" rel="noreferrer">{longUrl}</a></p><br/>
+              <label><b>Short URL</b></label><br/><br/>
+              <p><a href={shortUrl} onClick={()=>getData()}  style={linkstyle} target="_blank" rel="noreferrer">{shortUrl}</a></p>
+              
+              <Info createdAt={createdAt} usedCount={usedCount} 
+              deleteUrl={<Tooltip title='Delete'><IconButton onClick={()=>remove(_id)}><DeleteIcon color='error'/></IconButton></Tooltip>}
+              shortUrl={shortUrl} />
+
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>)
       })}
+         {/* Snack Bar */}
+         <Stack spacing={2} sx={{ width: '100%' }} >
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} >
+           <Alert severity={Message.result} sx={{ width: '100%' }}>
+           {Message.msg}
+           </Alert>
+          </Snackbar>
+          </Stack>
+  </div>
   </div>)
+}
+
+function Info({createdAt,usedCount,deleteUrl,shortUrl})
+{
+  const [showinfo,setShowinfo]=useState('hide')
+  const icon=(showinfo==='hide')?<KeyboardArrowDownIcon/>:<KeyboardArrowUpIcon/>
+
+
+  // Tooltip 
+  const [text,setText]=useState('Copy Short URL')
+  const copy=()=>{
+    setTimeout(() => {
+      setText('Copy Short URL')
+    }, 1000);
+  }
+
+ 
+
+  return( <div>
+   
+      <IconButton className='info' onClick={()=>setShowinfo((showinfo)=>(showinfo==='hide')?'show':'hide')}>{icon}</IconButton>
+    
+    {deleteUrl}
+    <Tooltip title={text}>
+    <IconButton onClick={()=> {navigator.clipboard.writeText(shortUrl);setText(()=>(text==='Copy Short URL')&&'Copied');copy()}}><ContentCopyIcon/></IconButton>
+    </Tooltip>
+
+    {(showinfo==='show')&&<div className='urldetails'>      
+    <p>CreatedAt: {createdAt}</p>
+    <p>Clicks: {usedCount}</p>
+    </div>}
+    
+  </div>
+
+  )
+
 }
 
 
 function Message({msg})
-{
-//   const Transition = forwardRef(function Transition(props, ref)
-//   {
-//    return <Slide direction="up" ref={ref} {...props} />;
-//  });
- 
+{ 
  const [open, setOpen] = useState(false);
  
    const handleClickOpen = () => {setOpen(true);};
@@ -730,33 +803,8 @@ function Message({msg})
 
 
 
-// Pending work=>{UserDatas page,Responsive,Signup:progress,Change password,Documentation }
+// Pending work=>{Responsive,Documentation }
 
-
-
-
-
-// <TextField variant="outlined" onChange={handleChange} onBlur={handleBlur} className='signupfield' name='Firstname' id='Firstname' color='success' label='FirstName' type='text' onInput={(e)=>setFirstname(e.target.value)} placeholder="Enter the FirstName"/><br/><br/>
-//             <TextField variant="outlined" onChange={handleChange} onBlur={handleBlur} className='signupfield' name='Lastname'  id='Lastname' color='success' label='LastName' type='text' onInput={(e)=>setLastname(e.target.value)}  placeholder="Enter the LastName"/><br/><br/>
-//             <TextField variant="outlined" onChange={handleChange} onBlur={handleBlur} className='signupfield' name='Username'  id='Username' color='success' label='UserName' type='text' onInput={(e)=>setUsername(e.target.value)}  placeholder="Enter the UserName"/><br/><br/>
-//             <TextField variant="outlined" onChange={handleChange} onBlur={handleBlur} className='signupfield' name='Mailid'    id='Mailid' color='success' label='Email' type='text' onInput={(e)=>setMailid(e.target.value)}    placeholder="Enter Email"/><br/><br/>
-//             <TextField variant="outlined" onChange={handleChange} onBlur={handleBlur} className='signupfield' name='Password'  id='Password' color='success' label='Password' type={visible} onInput={(e)=>setPassword(e.target.value)}  placeholder="Enter the Password"
-//              InputProps={{
-//                 endAdornment: ( <InputAdornment>
-//                 <Tooltip title={text}>
-//                   <IconButton onClick={()=>visibility()}>
-//                     {icon}
-//                   </IconButton>
-//                   </Tooltip>
-//                   </InputAdornment>
-//                 ),
-//               }}/><br/><br/>
-
-
-
-
-// <TextField label="Email" variant="outlined"  type='text' fullWidth onInput={(e)=>setMailid(e.target.value)}    placeholder="Enter Email"/><br/><br/>
-//           <TextField label="Password" variant="outlined" type={visible} fullWidth onInput={(e)=>setPassword(e.target.value)}  placeholder="Enter the Password"
 
 
 
