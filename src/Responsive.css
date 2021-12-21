@@ -1,0 +1,419 @@
+@media screen and (min-width:601px ) and (max-width:900px)
+{
+
+/* Sign Up */
+.signup
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    height: fit-content;
+    gap: 0rem;
+}  
+.headingcontainer
+{
+    padding-top: 3rem;
+    text-align: center;
+    height: fit-content;
+    margin-bottom: 3rem;
+}
+.signupcontainer
+{
+    margin-bottom:4rem;
+}
+#signupprogress
+{
+  margin-Left:2rem;
+  margin-Bottom:-41rem;
+  margin-Top:1rem;
+  position:absolute;
+  z-index:1;
+}
+
+/* Login  */
+
+.login
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    height: fit-content;
+    padding-top:0rem;
+    gap: 0rem;
+}
+.login .headingcontainer
+{
+    margin-top: -2.8rem;
+}
+.logincontainer
+{
+    margin-top:-2rem;
+}
+
+
+/* Forgot Password */
+.forgotpassword
+{
+    margin:5rem auto;
+}
+.forgotfield
+{
+    margin-top:1rem !important;
+}
+.forgotsubmitbutton
+{
+    margin-top:-4rem !important;
+}
+.forgotbackbutton
+{
+    margin-bottom:2rem !important;
+}
+#forgotprogress
+{
+    margin-left:22.5rem ;
+    margin-Top:-9rem;
+    position:absolute;
+    z-index:1;
+}
+
+/* Change Password */
+.changepassword
+{
+    margin-top:6rem;
+}
+
+#changepasswordprogress
+{
+  margin-left:22rem ;
+  margin-Top:-13.5rem;
+  position:absolute;
+  z-index:1;
+}
+
+#nav
+{
+    
+    width:100%;
+}
+.avatar
+{
+    margin-left:30.8rem !important;
+    margin-right: 0 !important;
+}
+
+.urlbox1
+{
+    width:34.8rem !important;
+    
+}
+.urlbox2
+{
+    width:40rem !important;
+}
+
+.customcheckbox
+{
+    margin-left:22.2rem !important;
+}
+
+.checkboxtext
+{
+    font-size:1rem !important;
+    
+}
+
+.dashboard
+{
+  margin: 6rem 3rem !important;
+  width: fit-content;
+}
+
+.editlongurl,.editcustomurl,.savebutton,.cancel
+{
+    width:40rem;
+}
+.editdashboard
+{
+  margin: 6rem 3rem !important;
+  width: fit-content;
+}
+
+.urlpage
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height:fit-content;
+    
+}
+
+.indurl
+{
+    width:18.4rem !important;
+    margin-left:-0.4rem ;
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:600px)
+{
+
+/* Signup */
+.signup 
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    height: fit-content;
+    gap: 0rem;
+}
+.headingcontainer
+{
+    padding-top: 3rem;
+    margin-bottom:2rem;
+    
+    text-align: center;
+}
+
+.heading
+{
+    font-size:1.8rem;
+}
+.subheading
+{
+    margin-right:4rem;
+    /* text-align:justify; */
+}
+
+.signupcontainer
+{
+    margin-bottom:4rem;
+    width:19rem;
+    padding:0 0.7rem ;
+    padding-top:3rem;
+    height:40rem;
+}
+.signupfield
+{
+    width:17.3rem;
+   
+    
+}
+#Firstname,#Lastname,#Username,#Mailid,#Password
+{
+    height: 1rem;
+}
+.signupfieldbutton
+{
+    width: 17.3rem;
+}
+#signupprogress
+{
+  margin-Left:2rem;
+  margin-Bottom:-41rem;
+  margin-Top:0rem;
+  position:absolute;
+  z-index:1;
+}
+
+/* Login */
+
+.login
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    height:100vh;
+    padding-top:0rem;
+    gap: 0rem;
+}
+.headingcontainer
+{
+    margin-top: -2.8rem;
+}
+.logincontainer
+{
+    margin-top:-2rem;
+    width: 19rem;
+    padding:0 0.7rem ;
+    padding-top:3rem;
+    height:22rem;
+    /* margin-bottom: 5rem; */
+}
+
+.loginfield 
+{
+    width:17.3rem !important;
+}
+.loginbutton
+{
+    width:17.3rem !important;
+} 
+ #signup
+{
+ margin-left:1.6rem;
+
+} 
+
+/* forgot Password */
+.forgotpassword
+{
+    margin:5rem auto;
+    width:19rem;
+    padding:0 0.7rem ;
+    padding-top:2rem;
+    height:17rem;
+}
+.forgotfield
+{
+    width:17.3rem !important;
+    margin-top: 1rem !important;
+    
+}
+
+.forgotsubmitbutton
+{
+    margin-top:-5rem !important;
+}
+
+.forgotbackbutton
+{
+    margin-left:13rem !important;
+    margin-top:-5rem !important;
+}
+
+#forgotprogress
+{
+    margin-left:10rem ;
+    margin-Top:-8.5rem;
+    position:absolute;
+    z-index:1;
+}
+/* #message
+{
+    padding: auto 0 !important;
+} */
+
+/* Change Password */
+.changepassword
+{
+    width:19rem;
+}
+.changepasswordfield
+{
+    margin-top:2rem !important;
+}
+.changepasswordbutton
+{
+    margin-top:-1rem !important;
+}
+
+#changepasswordprogress
+{
+  margin-left:10rem ;
+  margin-Top:-13.5rem;
+  position:absolute;
+  z-index:1;
+}
+
+#nav
+{
+    display: flex;
+    width:100%;
+}
+.avatar
+{
+    margin-left:7.4rem !important;
+    margin-right: 0 !important;
+}
+
+.urlbox1
+{
+    width:14.8rem !important;
+    /* margin-left:1rem!important; */
+}
+.urlbox2
+{
+    width:19.85rem !important;
+}
+
+.customcheckbox
+{
+    margin-left:2.2rem !important;
+}
+
+.checkboxtext
+{
+    font-size:1rem !important;
+    
+}
+
+.dashboard
+{
+  margin: 8rem 1.2rem !important;
+  width: fit-content;
+}
+
+.editlongurl,.editcustomurl,.savebutton,.cancel
+{
+    width:19.5rem;
+}
+.editdashboard
+{
+    margin:4rem 1.5rem !important;
+    width: fit-content;
+}
+
+.urlpage
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    height:fit-content;
+    
+}
+
+.indurl
+{
+    width:18.4rem !important;
+    margin-left:-1.8rem ;
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

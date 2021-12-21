@@ -6,11 +6,11 @@ body{
 
 .login,.signup
 {
-  display:flex;
-  flex-wrap: wrap;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
   background-image: linear-gradient(to right, #90a0d0, #90a0d0, #90a0d0, #90a0d0, #90a0d0);
-  justify-content: space-around;
   align-items: center;
+  justify-items: center;
   height:100vh;
   gap:1rem;
 }
@@ -22,6 +22,15 @@ body{
 {
   padding-top:0.5rem;
 }
+#signupprogress
+{
+  margin-Left:45rem;
+  margin-Bottom:-32rem;
+  margin-Top:0rem;
+  position:absolute;
+  z-index:1;
+}
+
 
 .logincontainer,.heading
 {
@@ -167,11 +176,11 @@ body{
   color:white;
   text-decoration: none;
 }
-.dashboard
+.dashboard,.editdashboard
 {
   width: 53rem;
   /* background-color: whitesmoke; */
-  margin:5rem 20rem;
+  margin:8rem 20rem;
   height:20rem;
 }
 
@@ -195,11 +204,11 @@ body{
 
 .urlpage
 {
-  display:flex;
-  flex-wrap: wrap;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap:3rem;
   margin:2rem 2rem;
-  margin-left:6rem;
+  margin-left:4rem;
 }
 .indurl
 {
@@ -258,6 +267,17 @@ height:fit-content;
   
 }
 
+.editlongurl
+{
+  width:50rem;
+}
 
+.editcustomurl
+{
+  width:50rem;
+}
 
-
+.savebutton,.cancel
+{
+  width:50rem;
+}

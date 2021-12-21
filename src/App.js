@@ -1,5 +1,6 @@
 
 import './App.css';
+import './Responsive.css'
 import{Switch,Link,Route,useHistory,useParams,Redirect} from "react-router-dom";
 import axios from "axios";
 import {useState,useContext,createContext,useEffect} from "react";
@@ -34,6 +35,7 @@ import MenuItem from '@mui/material/MenuItem';
 import CircularProgress from '@mui/material/CircularProgress';
 import { InputGroup} from 'react-bootstrap';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 // Dialog Box
 import Dialog from "@mui/material/Dialog";
@@ -107,13 +109,16 @@ console.log(Status);
                 <Paper elevation={0} style={{borderStyle:"none",minHeight:"100vh"}}>
             <Navbar themeIcon={themeIcon}/>
             <Route exact path='/Dashboard'>{(Statuscode===200&&Status==='Online')?<Dashboard/>:<Redirect to={'/'}/> }</Route>
-            <Route path='/Dashboard/userdata'>{(Statuscode===200&&Status==='Online')?<Userdatas/>:<Redirect to={'/'}/> }</Route>
+            <Route path='/userdata'>{(Statuscode===200&&Status==='Online')?<Userdatas/>:<Redirect to={'/'}/> }</Route>
+            <Route path='/updatedata/:id'>{(Statuscode===200&&Status==='Online')?<Update/>:<Redirect to={'/'}/> }</Route>
+            {/* <div style={{backgroundColor:'black',height:'3rem',width:'100%',marginTop:'-2rem'}}><p>URL Shortener</p></div> */}
             </Paper>
             </ThemeProvider>
             </>
            
         </Switch>
         </context.Provider>
+        
     </div>)
 }
 
@@ -131,11 +136,11 @@ function Navbar({themeIcon})
     };
     return( 
         <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" id='nav'>
         <Toolbar variant="dense">
         <Typography variant="h6" color="inherit" component="div">
         <Button color="inherit"><Link className="link" to="/Dashboard">Home</Link></Button>
-        <Button color="inherit"><Link className="link" to="/Dashboard/userdata">Url</Link></Button>
+        <Button color="inherit"><Link className="link" to="/userdata">Url</Link></Button>
 
         <Tooltip title={(Name)?Name:''}><IconButton className='avatar' onClick={handleClick}><AccountCircleIcon style={{fill:'white'}} /></IconButton></Tooltip>
         
@@ -172,7 +177,7 @@ function Signup()
       Firstname:yup.string().required('Required Field'),
       Lastname:yup.string().required('Required Field'),
       Username:yup.string().required('Required Field'),
-      Mailid:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email'),
+      Mailid:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email'),// eslint-disable-line
       Password:yup.string().min(8,'Minimum 8 Characters Required').required('Required Field')
     })
 
@@ -205,13 +210,13 @@ function Signup()
     }
   
     
-    const loadingstyle={marginLeft:'47rem',marginBottom:'-32rem',marginTop:'0rem',position:"absolute",zindex:1} 
+    // const loadingstyle={marginLeft:'47rem',marginBottom:'-32rem',marginTop:'0rem',position:"absolute",zindex:1} 
 
     return (<div className="signup">
-              {(progress===1)&&<CircularProgress style={loadingstyle} color='success'></CircularProgress>}
+              {(progress===1)&&<CircularProgress  id='signupprogress' color='success'></CircularProgress>}
             <div  className='headingcontainer'>
                 <p className='heading' >U R L S H O R T E N E R</p>
-                <p className='subheading'>Simplify your links, customize & manage them</p>
+                <p className='subheading'>Simplify your links, customize 	&amp; manage them</p>
             </div>
 
             
@@ -267,11 +272,12 @@ function Signup()
 
 function Login()
 {
-    const {history,token,setToken,result,setResult,Statuscode,setStatuscode,Status,setStatus}=useContext(context);
-
-    useEffect(()=>{setStatus('Offline');setResult('')},[])
+    const {history,token,setToken,result,setResult,setStatuscode,setStatus}=useContext(context);
+  // eslint-disable-next-line
+    useEffect(()=>{setStatus('Offline');setResult('')},[])   
     console.log(result);
 
+    // Server Message
     const [Message,setMessage]=useState('')
     const [open, setOpen] = useState(false);
     const Alert = forwardRef(function Alert(props, ref) {
@@ -282,8 +288,9 @@ function Login()
     
     console.log(token);
 
+  // Validation
   let validation=yup.object({
-    Mailid:yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email').required('Required Field'),
+    Mailid:yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email').required('Required Field'), // eslint-disable-line
     Password:yup.string().min(8,'Minimum 8 Characters Required').required('Required Field')
   })
 
@@ -303,6 +310,7 @@ function Login()
     }
 
     
+    // Login Request
     const login=(userData)=>{
         axios({
             url:`${URL}/login`,
@@ -316,7 +324,7 @@ function Login()
             {
                 setToken(()=>result.data.token)   //  token
             
-                localStorage.setItem('token',result.data.token) // token
+                // localStorage.setItem('token',result.data.token) // token
                 setStatuscode(()=>result.status) // (status===200)
                 setStatus(()=>'Online') //  (status==='Online)
 
@@ -330,7 +338,7 @@ function Login()
            
             <div  className='headingcontainer'>
                 <p className='heading' >U R L S H O R T E N E R</p>
-                <p className='subheading'>Simplify your links, customize & manage them</p>
+                <p className='subheading'>Simplify your links, customize 	&amp; manage them</p>
             </div>
             <Card className='logincontainer'>
               <form onSubmit={handleSubmit}>
@@ -383,15 +391,16 @@ function Forgotpassword()
   const handleClose = () => {setOpen(false);};
 
 
-    const {history}=useContext(context);
+  const {history}=useContext(context);
+  const[progress,setProgress]=useState(0)
 
   let validation=yup.object({
-    Mailid:yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email').required('Required Field')
+    Mailid:yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Must Be a Valid Email').required('Required Field') // eslint-disable-line
   })
   const{handleSubmit,handleChange,handleBlur,values,errors,touched}=useFormik({
     initialValues:{Mailid:''},
     validationSchema:validation,
-    onSubmit:(userData)=>forgotpassword(userData)
+    onSubmit:(userData)=>{forgotpassword(userData);setProgress(1)}
   })
 
 
@@ -401,9 +410,11 @@ function Forgotpassword()
             url:`${URL}/forgotpassword`,
             method:'POST',
             data:userData
-        }).then((x)=>{setMessage({msg:x.data,result:'success'})}).then(()=>history.push('/message'))
-        .catch((error)=>(setMessage({msg:error.response.data,result:'error'}))).then(handleClick)
+        }).then((x)=>{setMessage({msg:x.data,result:'success'})}).then(()=>{setProgress(0);history.push('/message')})
+        .catch((error)=>{setProgress(0);setMessage({msg:error.response.data,result:'error'})}).then(handleClick)
     }
+
+    // const loadingstyle={marginLeft:'41rem',marginBottom:'32rem',marginTop:'-13.5rem',position:"absolute",zindex:1} 
 
     return (<div className='forgotcontainer'>
            <Card className="forgotpassword">
@@ -417,6 +428,7 @@ function Forgotpassword()
          </form>
          <Button type='submit' onClick={()=>history.goBack()} className='forgotbackbutton' variant="contained" color='warning'>Back</Button>
     </Card>
+    {(progress===1)&&<CircularProgress id='forgotprogress' color='primary'></CircularProgress>}
         {/* Snack Bar */}
         <Stack spacing={2} sx={{ width: '100%' }} >
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >
@@ -484,7 +496,7 @@ function Changepassword()
         history.push('/')
       }, 6000);
     }
-    const loadingstyle={marginLeft:'41rem',marginBottom:'32rem',marginTop:'-13.5rem',position:"absolute",zindex:1} 
+    // const loadingstyle={marginLeft:'41rem',marginBottom:'32rem',marginTop:'-13.5rem',position:"absolute",zindex:1} 
 
 
     // .then(()=>handleClickOpen())
@@ -510,7 +522,7 @@ function Changepassword()
         <Button type='submit'  variant="contained" fullWidth className='changepasswordbutton' color='warning'>Change Password</Button>
         </form>
         </Card>
-        {(progress===1)&&<CircularProgress style={loadingstyle} color='warning'></CircularProgress>}
+        {(progress===1)&&<CircularProgress id='changepasswordprogress' color='warning'></CircularProgress>}
           {/* Snack Bar */}
           <Stack spacing={2} sx={{ width: '100%' }} >
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >
@@ -537,7 +549,7 @@ function Dashboard()
   const handleClose = () => {setOpen(false);};
 
     // Username
-    const {setName}=useContext(context);
+    const {setName,token}=useContext(context);
     const [count,setCount]=useState(false)  // Conditional rendering for Custom Url text field 
     const [responseData,setResponseData]=useState(null) // Response
     //  window.history.pushState({}, '',window.location);
@@ -548,7 +560,7 @@ function Dashboard()
       // Validation
       let validation=yup.object({
         url:yup.string().required('Required Field'),
-        customUrl:yup.string().matches( /^[A-Za-z0-9 ]+$/,'Special Characters Not Allowed').min(5,'Minimum 5 Characters Required')
+        customUrl:yup.string().matches( /^[A-Za-z0-9 ]+$/,'Special Characters Not Allowed').min(5,'Minimum 5 Characters Required') 
       })
       const {handleChange,handleBlur,handleSubmit,values,errors,touched}=useFormik({
         initialValues:{url:'',customUrl:''},
@@ -564,7 +576,8 @@ function Dashboard()
         }, 1000);
       }
 
-      const getToken=localStorage.getItem('token')  // Local Storage
+      // const getToken=localStorage.getItem('token')  // Local Storage
+      const getToken=token  // Local Storage
       const label = { inputProps: { 'aria-label': 'Checkbox demo' } }; // Check Box
       
       
@@ -575,6 +588,7 @@ function Dashboard()
               headers:{'x-auth-token':getToken}    
             }).then((responsebody)=>setResponseData(responsebody.data))
       }
+      // eslint-disable-next-line
       useEffect(getData,[])
     
     const getUrl=(userData)=>{ // After getting the data Long Url sent to the server & short url is sent back as response 
@@ -593,7 +607,7 @@ function Dashboard()
       if(responseData)
       {
         // After getting response Mailid destructured
-        const {Mailid,Status,Username}=responseData;
+        const {Mailid}=responseData;
         const {url,customUrl}=urlData
         getUrl({Mailid,url,customUrl})    
       }
@@ -634,7 +648,7 @@ function Dashboard()
                 }} /><br/>
               <Button type='submit' onClick={()=>{setShortUrl('')}}>Clear Data</Button>
               <Checkbox {...label } onChange={()=>setCount((count)=>!count)} className='customcheckbox' />
-              <label>Create Custom URL </label>
+              <label className='checkboxtext'>Create Custom URL </label>
 
                 {/* Snack Bar */}
           <Stack spacing={2} sx={{ width: '100%' }} >
@@ -652,7 +666,7 @@ function Dashboard()
 
 function Userdatas()
 {
-  const{themeChange}=useContext(context)
+  const{themeChange,history,token}=useContext(context)
 
   // Server Message
   const [Message,setMessage]=useState('')
@@ -664,7 +678,8 @@ function Userdatas()
   const handleClose = () => {setOpen(false);};
 
 
-    const getToken=localStorage.getItem('token')
+    // const getToken=localStorage.getItem('token')
+    const getToken=token
     const [userData,setUserData]=useState([])
   
     
@@ -692,17 +707,17 @@ function Userdatas()
 
 
   return (<div>
-         <div className='monthusage'><p>Monthly Usage : {Math.ceil(userData.length*(1/30))}</p></div>
+         <div className='monthusage'><p>URLS : {(userData.length)}</p></div>
          <div className="urlpage">   
       {(userData.length===0)?<div><p>Loading...</p>
-         <CircularProgress style={loadingstyle}></CircularProgress></div>:userData.map(({longUrl,shortUrl,_id,createdAt,usedCount})=>{
+         <CircularProgress style={loadingstyle}></CircularProgress></div>:userData.map(({longUrl,shortUrl,_id,createdAt,usedCount,shortString,lastUpdated,lastVisited})=>{
           return(<Card sx={{ maxWidth: 345 }} className='indurl' key={_id} >
           <CardActionArea>
             
             <CardContent>
-              {/* <Typography gutterBottom  component="div">
-              <p>ShortUrl:<a href={shortUrl} target="_blank" rel="noreferrer">{shortUrl}</a></p>
-              </Typography> */}
+              <Typography gutterBottom  component="div">
+                <h6>{shortString}</h6>
+              </Typography>
               <Typography variant="body2" color="text.secondary">
                 <label><b>URL</b></label><br/><br/>
               <p><a style={linkstyle} href={longUrl} target="_blank" rel="noreferrer">{longUrl}</a></p><br/>
@@ -711,7 +726,8 @@ function Userdatas()
               
               <Info createdAt={createdAt} usedCount={usedCount} 
               deleteUrl={<Tooltip title='Delete'><IconButton onClick={()=>remove(_id)}><DeleteIcon color='error'/></IconButton></Tooltip>}
-              shortUrl={shortUrl} />
+              editUrl={ <Tooltip title='Edit'><IconButton onClick={()=>history.push(`/updatedata/${_id}`)}><EditIcon color='success'/> </IconButton></Tooltip>}
+              shortUrl={shortUrl} lastUpdated={lastUpdated} lastVisited={lastVisited} />
 
               </Typography>
             </CardContent>
@@ -730,7 +746,7 @@ function Userdatas()
   </div>)
 }
 
-function Info({createdAt,usedCount,deleteUrl,shortUrl})
+function Info({createdAt,lastUpdated,usedCount,deleteUrl,shortUrl,editUrl,lastVisited})
 {
   const [showinfo,setShowinfo]=useState('hide')
   const icon=(showinfo==='hide')?<KeyboardArrowDownIcon/>:<KeyboardArrowUpIcon/>
@@ -750,13 +766,20 @@ function Info({createdAt,usedCount,deleteUrl,shortUrl})
    
       <IconButton className='info' onClick={()=>setShowinfo((showinfo)=>(showinfo==='hide')?'show':'hide')}>{icon}</IconButton>
     
-    {deleteUrl}
+    {deleteUrl}{editUrl}  
     <Tooltip title={text}>
     <IconButton onClick={()=> {navigator.clipboard.writeText(shortUrl);setText(()=>(text==='Copy Short URL')&&'Copied');copy()}}><ContentCopyIcon/></IconButton>
     </Tooltip>
 
+     
+
     {(showinfo==='show')&&<div className='urldetails'>      
-    <p>CreatedAt: {createdAt}</p>
+    <label>CreatedAt</label>
+     <p>{createdAt}</p>
+     <label>Last Visited</label>
+    <p>{lastVisited}</p>
+    <label>last Updated</label>
+    <p>{lastUpdated}</p>
     <p>Clicks: {usedCount}</p>
     </div>}
     
@@ -767,6 +790,102 @@ function Info({createdAt,usedCount,deleteUrl,shortUrl})
 }
 
 
+function Update() 
+{
+  const {token,history}=useContext(context)
+  const {id}=useParams()
+  const [data,setData]=useState(null)
+  console.log(token,'UPDATE');
+
+const getData=()=>
+{
+  axios({
+    url:`http://localhost:1000/urlmaker/geturl/${id}`,
+    method:'GET',
+  }).then((response)=>setData(response.data))
+}
+console.log(data);
+useEffect(getData,[])
+
+
+    const loadingstyle={marginLeft:'40rem',marginTop:'15rem'} //  Loading
+  return((data===null)?<CircularProgress style={loadingstyle}></CircularProgress>:<div><UpdateURL data={data}/></div>)  
+}
+
+function UpdateURL({data})
+{
+  const {history}=useContext(context);
+  const {longUrl,shortString,_id,lastUpdated}=data
+  const [long,setLong]=useState(longUrl)
+
+   // Server Message
+   const [Message,setMessage]=useState('')
+   const [open, setOpen] = useState(false);
+   const Alert = forwardRef(function Alert(props, ref) {
+     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+   });
+   const handleClick = () => {setOpen(true);};
+   const handleClose = () => {setOpen(false);};
+ 
+
+  const Update=(url)=>{
+    axios({
+      url:`http://localhost:1000/urlmaker/editurl`,
+      method:'PUT',
+      data:url
+    }) .then((response)=>response).then(({data})=>{setMessage({msg:data.Msg,result:'success'})})
+    .catch((error)=>setMessage({msg:error.response.data.Msg,result:'error'}))
+    .then(handleClick)
+  }
+  
+  if(Message.result==='success')
+  {
+    setTimeout(() => {
+      
+      history.push('/userdata')
+    }, 2000);
+  }
+
+  let validation=yup.object({
+    
+    customUrl:yup.string().matches( /^[A-Za-z0-9 ]+$/,'Special Characters Not Allowed').min(5,'Minimum 5 Characters Required').required('Required Field')
+  })
+
+  const {handleBlur,handleSubmit,handleChange,touched,errors,values}=useFormik({
+    initialValues:{customUrl:shortString,_id,lastUpdated},
+    validationSchema:validation,
+    onSubmit:(url)=>Update(url)
+  })
+
+  return (<div className='editdashboard' >
+              <form onSubmit={handleSubmit}>
+
+              <TextField type='text' variant="outlined" label='Update URL' name='url' id='url' readOnly className='editlongurl'
+                value={long}  placeholder="Update URL"/><br/><br/>
+
+      
+               <TextField type='text' label='Custom URL' className='editcustomurl'   placeholder='Custom URL' name='customUrl' id='customUrl'
+                onChange={handleChange} onBlur={handleBlur}  error={errors.customUrl && touched.customUrl}  value={values.customUrl} 
+               helperText={errors.customUrl && touched.customUrl &&errors.customUrl}/><br/><br/>
+
+               <Button type='submit' variant='contained' className='savebutton'>Save</Button><br/><br/>
+               </form>
+               <Button type='submit' variant='contained' color='warning' className='cancel' onClick={()=>history.push('/userdata')}>Cancel</Button>
+
+                   {/* Snack Bar */}
+            <Stack spacing={2} sx={{ width: '100%' }} >
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >
+           <Alert severity={Message.result} sx={{ width: '100%' }}>
+           {Message.msg}
+           </Alert>
+          </Snackbar>
+          </Stack>
+
+  </div>)
+}
+
+
+
 function Message({msg})
 { 
  const [open, setOpen] = useState(false);
@@ -774,7 +893,7 @@ function Message({msg})
    const handleClickOpen = () => {setOpen(true);};
  
    useEffect( handleClickOpen,[])
-  return( <div>
+  return( <div id="message">
     <Dialog open={open} keepMounted>
        <DialogTitle>Message <InfoIcon/></DialogTitle>
        <DialogContent>
@@ -803,7 +922,7 @@ function Message({msg})
 
 
 
-// Pending work=>{Responsive,Documentation }
+// Pending work=>{Responsive,Documentation,Background Color }
 
 
 
