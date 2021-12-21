@@ -107,11 +107,13 @@ console.log(Status);
             <>
             <ThemeProvider theme={theme}>
                 <Paper elevation={0} style={{borderStyle:"none",minHeight:"100vh"}}>
+                  
             <Navbar themeIcon={themeIcon}/>
             <Route exact path='/Dashboard'>{(Statuscode===200&&Status==='Online')?<Dashboard/>:<Redirect to={'/'}/> }</Route>
             <Route path='/userdata'>{(Statuscode===200&&Status==='Online')?<Userdatas/>:<Redirect to={'/'}/> }</Route>
             <Route path='/updatedata/:id'>{(Statuscode===200&&Status==='Online')?<Update/>:<Redirect to={'/'}/> }</Route>
             {/* <div style={{backgroundColor:'black',height:'3rem',width:'100%',marginTop:'-2rem'}}><p>URL Shortener</p></div> */}
+        
             </Paper>
             </ThemeProvider>
             </>
@@ -922,7 +924,7 @@ function Message({msg})
 
 
 
-// Pending work=>{Responsive,Documentation,Background Color }
+// Pending work=>{Documentation}
 
 
 

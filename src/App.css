@@ -207,12 +207,12 @@ body{
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap:3rem;
-  margin:2rem 2rem;
-  margin-left:4rem;
+  margin:2rem 2rem 0  4rem;
+  /* margin-left:4rem; */
 }
 .indurl
 {
-
+margin-bottom: 1rem;
 word-break: break-word;
 box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
 -webkit-box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
