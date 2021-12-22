@@ -1,6 +1,6 @@
+/* Screeen size greater than 600px */
 @media screen and (min-width:601px ) and (max-width:900px)
 {
-
 /* Sign Up */
 .signup
 {
@@ -79,7 +79,6 @@
 {
     margin-top:6rem;
 }
-
 #changepasswordprogress
 {
   margin-left:21rem ;
@@ -87,7 +86,7 @@
   position:absolute;
   z-index:1;
 }
-
+/* Nav Bar */
 #nav
 {
     
@@ -98,7 +97,7 @@
     margin-left:30.8rem !important;
     margin-right: 0 !important;
 }
-
+/* Dashboard */
 .urlbox1
 {
     width:34.8rem !important;
@@ -126,12 +125,14 @@
   width: fit-content;
 }
 
-#dataprogress
+/* URL Page */
+#dataprogress,#editprogress
 {
   margin-Left:18rem;
   margin-Top:5rem
 }
 
+/* edit URL */
 .editlongurl,.editcustomurl,.savebutton,.cancel
 {
     width:40rem;
@@ -141,13 +142,11 @@
   margin: 6rem 3rem !important;
   width: fit-content;
 }
-
 .urlpage
 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height:fit-content;
-    
+    height:fit-content;    
 }
 
 .indurl
@@ -156,22 +155,9 @@
     margin-left:-0.4rem ;
 }
 
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Screen size lesser then 600px */
 @media screen and (max-width:600px)
 {
 
@@ -198,7 +184,6 @@
 .subheading
 {
     margin-right:4rem;
-    /* text-align:justify; */
 }
 
 .signupcontainer
@@ -213,8 +198,6 @@
 .signupfield
 {
     width:17.3rem;
-   
-    
 }
 #Firstname,#Lastname,#Username,#Mailid,#Password
 {
@@ -227,7 +210,7 @@
 #signupprogress
 {
   margin-Left:2rem;
-  margin-Bottom:-43.5rem;
+  margin-Bottom:-38rem;
   margin-Top:0rem;
   position:absolute;
   z-index:1;
@@ -254,7 +237,6 @@
     padding:0 0.7rem ;
     padding-top:3rem;
     height:22rem;
-    /* margin-bottom: 5rem; */
 }
 
 .loginfield 
@@ -283,8 +265,7 @@
 .forgotfield
 {
     width:17.3rem !important;
-    margin-top: 1rem !important;
-    
+    margin-top: 1rem !important;   
 }
 
 .forgotsubmitbutton
@@ -305,11 +286,6 @@
     position:absolute;
     z-index:1;
 }
-/* #message
-{
-    padding: auto 0 !important;
-} */
-
 /* Change Password */
 .changepassword
 {
@@ -331,7 +307,7 @@
   position:absolute;
   z-index:1;
 }
-
+/* Nav Bar */
 #nav
 {
     display: flex;
@@ -343,10 +319,10 @@
     margin-right: 0 !important;
 }
 
+/* Dashboard */
 .urlbox1
 {
     width:16.7rem !important;
-    /* margin-left:1rem!important; */
 }
 .urlbox2
 {
@@ -370,12 +346,14 @@
   width: fit-content;
 }
 
-#dataprogress
+/* URL Page */
+#dataprogress,#editprogress
 {
   margin-Left:6.5rem;
   margin-Top:5rem
 }
 
+/* Edit URL Page */
 .editlongurl,.editcustomurl,.savebutton,.cancel
 {
     width:21.5rem;
@@ -398,9 +376,12 @@
     width:20rem !important;
     margin-left:-1.8rem ;
 }
-
-
-
+.urlcount
+{
+  text-align: right;
+  margin-right:2.5rem;
+  margin-top:1rem;
+}
 
 }
 

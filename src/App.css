@@ -1,9 +1,8 @@
 body{
-  /* font-family: 'Poppins', sans-serif; */
-  /* font-weight:800; */
   font-size:1.2rem;
 }
 
+/* Screen size greater the 900px */
 .login,.signup
 {
   display:grid;
@@ -14,6 +13,7 @@ body{
   height:100vh;
   gap:1rem;
 }
+
 .login
 {
   padding-top:4.32rem;
@@ -56,6 +56,8 @@ body{
 {
   margin-top:-3rem !important;
 }
+
+/* Forgot button */
 .forgotsignupbutton
 {
   display: flex;
@@ -83,7 +85,6 @@ body{
 {
   padding:2rem;
   height:38rem;
-  /* height: min-content; */
   width:24.5rem;
   box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.75) !important;
   -webkit-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.75) !important;
@@ -118,7 +119,7 @@ body{
 }
 
 
-
+/* Forgot */
 .forgotcontainer
 {
   background-image: linear-gradient(to right, #90a0d0, #90a0d0, #90a0d0, #90a0d0, #90a0d0);
@@ -127,7 +128,6 @@ body{
 }
 .forgotpassword
 {
-  
   padding:2rem;
   height:18rem;
   width:25rem;
@@ -151,9 +151,6 @@ body{
   margin-left: 16.5rem !important;
   margin-top:-2rem !important;
 }
-
-
- 
 #forgotprogress
 {
   margin-Left:41rem;
@@ -163,6 +160,7 @@ body{
   z-index:1;
 }
 
+/* Change password */
 .changepasswordcontainer
 {
   background-image: linear-gradient(to right, #90a0d0, #90a0d0, #90a0d0, #90a0d0, #90a0d0);
@@ -196,16 +194,16 @@ body{
   position:absolute;
   z-index:1;
 }
-
+/* Dashboard */
 .link,.link:hover
 {
   color:white;
   text-decoration: none;
 }
+
 .dashboard,.editdashboard
 {
   width: 53rem;
-  /* background-color: whitesmoke; */
   margin:8rem 20rem;
   height:20rem;
 }
@@ -219,6 +217,7 @@ body{
 {
   margin-left:31rem !important;
 }
+/* dashboard */
 .urlbox1
 {
   width:44.8rem;
@@ -228,13 +227,13 @@ body{
   width:50rem;
 }
 
+/* URL Page */
 .urlpage
 {
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap:3rem;
   margin:2rem 2rem 0  4rem;
-  /* margin-left:4rem; */
 }
 .indurl
 {
@@ -245,7 +244,6 @@ box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
 -moz-box-shadow: 10px 13px 39px -8px rgba(0,0,0,0.69) !important;
 width:30rem !important;
 height:fit-content;
-
 }
 
 #dataprogress
@@ -259,16 +257,10 @@ height:fit-content;
   animation:transitionIn 0.75s;
 }
 
-/* .info
-{
-  margin-left:16rem !important;
-  margin-top: -2rem !important;
-} */
-
-.monthusage
+.urlcount
 {
   text-align: right;
-  margin-right:3rem;
+  margin-right:4.6rem;
   margin-top:1rem;
 }
 .indurl  a
@@ -299,6 +291,7 @@ height:fit-content;
   
 }
 
+/* Edit URL */
 .editlongurl
 {
   width:50rem;
@@ -312,4 +305,10 @@ height:fit-content;
 .savebutton,.cancel
 {
   width:50rem;
+}
+
+#editprogress
+{
+margin-Left:40rem; 
+margin-Top:15rem;
 }
