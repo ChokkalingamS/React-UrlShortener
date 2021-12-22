@@ -227,7 +227,7 @@
 #signupprogress
 {
   margin-Left:2rem;
-  margin-Bottom:-42rem;
+  margin-Bottom:-43.5rem;
   margin-Top:0rem;
   position:absolute;
   z-index:1;
@@ -241,7 +241,7 @@
     grid-template-columns: 1fr;
     height:100vh;
     padding-top:0rem;
-    gap: 0rem;
+    gap:0.5rem;
 }
 .headingcontainer
 {
@@ -326,7 +326,7 @@
 
 #changepasswordprogress
 {
-  margin-left:12rem ;
+  margin-left:11.4rem ;
   margin-Top:-13.5rem;
   position:absolute;
   z-index:1;
