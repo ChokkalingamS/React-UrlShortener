@@ -149,6 +149,17 @@ body{
   margin-top:-2rem !important;
 }
 
+
+ 
+#forgotprogress
+{
+  margin-Left:41rem;
+  margin-Bottom:32rem;
+  margin-Top:-13.5rem;
+  position:absolute;
+  z-index:1;
+}
+
 .changepasswordcontainer
 {
   background-image: linear-gradient(to right, #90a0d0, #90a0d0, #90a0d0, #90a0d0, #90a0d0);
@@ -169,6 +180,15 @@ body{
   margin-bottom:1rem !important;
   margin-top:1rem!important;
   height:3rem !important;
+}
+
+#changepasswordprogress
+{
+  margin-Left:41rem;
+  margin-Bottom:32rem;
+  margin-Top:-13.5rem;
+  position:absolute;
+  z-index:1;
 }
 
 .link,.link:hover

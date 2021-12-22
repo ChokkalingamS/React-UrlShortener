@@ -68,7 +68,8 @@ export default function App()
 }
 
 // Server
-const URL=`http://localhost:1000/users`
+// const URL=`http://localhost:1000/users`
+const URL=`https://url-shor-t-ner.herokuapp.com/users`
 const context=createContext('')
 
 function Container()
@@ -595,7 +596,8 @@ function Dashboard()
     
     const getUrl=(userData)=>{ // After getting the data Long Url sent to the server & short url is sent back as response 
         axios({
-            url:`http://localhost:1000/urlmaker/url`,
+            // url:`http://localhost:1000/urlmaker/url`,
+            url:`https://url-shor-t-ner.herokuapp.com/urlmaker/url`,
             method:'POST',
             data  :userData   
           }).then((response)=>response.data).then((x)=>{setShortUrl(x.shortUrl);setMessage({msg:x.Msg,result:'success'})})
@@ -700,7 +702,8 @@ function Userdatas()
     // URL Delete
     const remove=(_id)=>{
       axios({
-        url:`http://localhost:1000/urlmaker/deleteurl/${_id}`,
+        // url:`http://localhost:1000/urlmaker/deleteurl/${_id}`,
+        url:`https://url-shor-t-ner.herokuapp.com/urlmaker/deleteurl/${_id}`,
         method:'DELETE'
     }).then((response)=>response).then(({data})=>setMessage({msg:data.Msg,result:'success'}))
     .catch((error)=>setMessage({msg:error.response.data.Msg,result:'error'}))
@@ -794,7 +797,7 @@ function Info({createdAt,lastUpdated,usedCount,deleteUrl,shortUrl,editUrl,lastVi
 
 function Update() 
 {
-  const {token,history}=useContext(context)
+  const {token}=useContext(context)
   const {id}=useParams()
   const [data,setData]=useState(null)
   console.log(token,'UPDATE');
@@ -802,7 +805,8 @@ function Update()
 const getData=()=>
 {
   axios({
-    url:`http://localhost:1000/urlmaker/geturl/${id}`,
+    // url:`http://localhost:1000/urlmaker/geturl/${id}`,
+    url:`https://url-shor-t-ner.herokuapp.com/urlmaker/geturl/${id}`,
     method:'GET',
   }).then((response)=>setData(response.data))
 }
@@ -818,7 +822,7 @@ function UpdateURL({data})
 {
   const {history}=useContext(context);
   const {longUrl,shortString,_id,lastUpdated}=data
-  const [long,setLong]=useState(longUrl)
+  // const [long,setLong]=useState(longUrl)
 
    // Server Message
    const [Message,setMessage]=useState('')
@@ -832,10 +836,11 @@ function UpdateURL({data})
 
   const Update=(url)=>{
     axios({
-      url:`http://localhost:1000/urlmaker/editurl`,
+      // url:`http://localhost:1000/urlmaker/editurl`,
+      url:`https://url-shor-t-ner.herokuapp.com/urlmaker/editurl`,
       method:'PUT',
       data:url
-    }) .then((response)=>response).then(({data})=>{setMessage({msg:data.Msg,result:'success'})})
+    }).then((response)=>response).then(({data})=>{setMessage({msg:data.Msg,result:'success'})})
     .catch((error)=>setMessage({msg:error.response.data.Msg,result:'error'}))
     .then(handleClick)
   }
@@ -848,10 +853,13 @@ function UpdateURL({data})
     }, 2000);
   }
 
-  let validation=yup.object({
-    
-    customUrl:yup.string().matches( /^[A-Za-z0-9 ]+$/,'Special Characters Not Allowed').min(5,'Minimum 5 Characters Required').required('Required Field')
-  })
+  let validation = yup.object({
+    customUrl: yup
+      .string()
+      .matches(/^[A-Za-z0-9 ]+$/, "Special Characters Not Allowed")
+      .min(5, "Minimum 5 Characters Required")
+      .required("Required Field"),
+  });
 
   const {handleBlur,handleSubmit,handleChange,touched,errors,values}=useFormik({
     initialValues:{customUrl:shortString,_id,lastUpdated},
@@ -863,7 +871,7 @@ function UpdateURL({data})
               <form onSubmit={handleSubmit}>
 
               <TextField type='text' variant="outlined" label='Update URL' name='url' id='url' readOnly className='editlongurl'
-                value={long}  placeholder="Update URL"/><br/><br/>
+                value={longUrl}  placeholder="Update URL"/><br/><br/>
 
       
                <TextField type='text' label='Custom URL' className='editcustomurl'   placeholder='Custom URL' name='customUrl' id='customUrl'
