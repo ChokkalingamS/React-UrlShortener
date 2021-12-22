@@ -525,7 +525,7 @@ function Changepassword()
         <Button type='submit'  variant="contained" fullWidth className='changepasswordbutton' color='warning'>Change Password</Button>
         </form>
         </Card>
-        {(progress===1)&&<CircularProgress id='changepasswordprogress' color='warning'></CircularProgress>}
+        {(progress===0)&&<CircularProgress id='changepasswordprogress' color='warning'></CircularProgress>}
           {/* Snack Bar */}
           <Stack spacing={2} sx={{ width: '100%' }} >
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >
@@ -597,7 +597,7 @@ function Dashboard()
     const getUrl=(userData)=>{ // After getting the data Long Url sent to the server & short url is sent back as response 
         axios({
             // url:`http://localhost:1000/urlmaker/url`,
-            url:`https://url-shor-t-ner.herokuapp.com/urlmaker/url`,
+            url:`https://url-shor-t-ner.herokuapp.com/url`,
             method:'POST',
             data  :userData   
           }).then((response)=>response.data).then((x)=>{setShortUrl(x.shortUrl);setMessage({msg:x.Msg,result:'success'})})
@@ -687,7 +687,7 @@ function Userdatas()
     const [userData,setUserData]=useState([])
   
     
-    const loadingstyle={marginLeft:'35rem',marginTop:'5rem'} //  Loading
+    // const loadingstyle={marginLeft:'35rem',marginTop:'5rem'} //  Loading
     const linkstyle= {color:(themeChange==='light')&&'#1976d2'}
 
     const getData=()=>{
@@ -703,7 +703,7 @@ function Userdatas()
     const remove=(_id)=>{
       axios({
         // url:`http://localhost:1000/urlmaker/deleteurl/${_id}`,
-        url:`https://url-shor-t-ner.herokuapp.com/urlmaker/deleteurl/${_id}`,
+        url:`https://url-shor-t-ner.herokuapp.com/deleteurl/${_id}`,
         method:'DELETE'
     }).then((response)=>response).then(({data})=>setMessage({msg:data.Msg,result:'success'}))
     .catch((error)=>setMessage({msg:error.response.data.Msg,result:'error'}))
@@ -714,8 +714,8 @@ function Userdatas()
   return (<div>
          <div className='monthusage'><p>URLS : {(userData.length)}</p></div>
          <div className="urlpage">   
-      {(userData.length===0)?<div><p>Loading...</p>
-         <CircularProgress style={loadingstyle}></CircularProgress></div>:userData.map(({longUrl,shortUrl,_id,createdAt,usedCount,shortString,lastUpdated,lastVisited})=>{
+      {(userData.length===0)?<div>
+         <CircularProgress id='dataprogress'></CircularProgress></div>:userData.map(({longUrl,shortUrl,_id,createdAt,usedCount,shortString,lastUpdated,lastVisited})=>{
           return(<Card sx={{ maxWidth: 345 }} className='indurl' key={_id} >
           <CardActionArea>
             
@@ -806,7 +806,7 @@ const getData=()=>
 {
   axios({
     // url:`http://localhost:1000/urlmaker/geturl/${id}`,
-    url:`https://url-shor-t-ner.herokuapp.com/urlmaker/geturl/${id}`,
+    url:`https://url-shor-t-ner.herokuapp.com/geturl/${id}`,
     method:'GET',
   }).then((response)=>setData(response.data))
 }
@@ -837,7 +837,7 @@ function UpdateURL({data})
   const Update=(url)=>{
     axios({
       // url:`http://localhost:1000/urlmaker/editurl`,
-      url:`https://url-shor-t-ner.herokuapp.com/urlmaker/editurl`,
+      url:`https://url-shor-t-ner.herokuapp.com/editurl`,
       method:'PUT',
       data:url
     }).then((response)=>response).then(({data})=>{setMessage({msg:data.Msg,result:'success'})})

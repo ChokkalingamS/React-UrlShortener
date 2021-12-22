@@ -248,6 +248,12 @@ height:fit-content;
 
 }
 
+#dataprogress
+{
+  margin-Left:35rem;
+  margin-Top:5rem
+}
+
 .urlpage
 {
   animation:transitionIn 0.75s;

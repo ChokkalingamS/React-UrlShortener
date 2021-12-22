@@ -126,6 +126,12 @@
   width: fit-content;
 }
 
+#dataprogress
+{
+  margin-Left:18rem;
+  margin-Top:5rem
+}
+
 .editlongurl,.editcustomurl,.savebutton,.cancel
 {
     width:40rem;
@@ -221,7 +227,7 @@
 #signupprogress
 {
   margin-Left:2rem;
-  margin-Bottom:-41rem;
+  margin-Bottom:-42rem;
   margin-Top:0rem;
   position:absolute;
   z-index:1;
@@ -320,7 +326,7 @@
 
 #changepasswordprogress
 {
-  margin-left:10rem ;
+  margin-left:12rem ;
   margin-Top:-13.5rem;
   position:absolute;
   z-index:1;
@@ -362,6 +368,12 @@
 {
   margin: 8rem 1.2rem !important;
   width: fit-content;
+}
+
+#dataprogress
+{
+  margin-Left:6.5rem;
+  margin-Top:5rem
 }
 
 .editlongurl,.editcustomurl,.savebutton,.cancel
