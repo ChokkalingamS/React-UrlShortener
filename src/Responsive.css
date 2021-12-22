@@ -47,6 +47,12 @@
 {
     margin-top:-2rem;
 }
+#loginprogress
+{
+    position: absolute;
+    margin-top:19rem;
+    margin-left:4rem;
+}
 
 
 /* Forgot Password */
@@ -226,6 +232,12 @@
     padding-top:0rem;
     gap:0.5rem;
 }
+#loginprogress
+{
+    position: absolute;
+    margin-top:2rem;
+    margin-left:-1rem;
+}
 .headingcontainer
 {
     margin-top: -2.8rem;
@@ -246,6 +258,7 @@
 .loginbutton
 {
     width:17.3rem !important;
+    
 } 
  #signup
 {

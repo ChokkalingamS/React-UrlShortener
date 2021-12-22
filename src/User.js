@@ -44,7 +44,7 @@ function Signup() {
   let validation = yup.object({
     Firstname: yup.string().required('Required Field'),
     Lastname: yup.string().required('Required Field'),
-    Username: yup.string().required('Required Field'),
+    Username: yup.string().required('Required Field'), // eslint-disable-next-line
     Mailid: yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     Password: yup.string().min(8, 'Minimum 8 Characters Required').required('Required Field')
   });
@@ -111,7 +111,7 @@ function Signup() {
           helperText={errors.Password && touched.Password && errors.Password} className='signupfield' name='Password' id='Password' color='success' 
           label='Password' type={visible} placeholder="Enter the Password"
           InputProps={{
-            endAdornment: (<InputAdornment>
+            endAdornment: (<InputAdornment position="start">
               <Tooltip title={text}>
                 <IconButton onClick={() => visibility()}>
                   {icon}
@@ -145,8 +145,11 @@ function Signup() {
 
 
 // Login
- function Login() {
-  const { history, token, setToken, result, setResult, setStatuscode, setStatus } = useContext(context);
+ function Login() 
+ {
+  const { history,setToken, result, setResult, setStatuscode, setStatus } = useContext(context);
+
+  const [progress, setProgress] = useState(0);  // Progress Bar
   // eslint-disable-next-line
   useEffect(() => { setStatus('Offline'); setResult(''); }, []);  // To prevent back button by setting offline status
  
@@ -157,7 +160,7 @@ function Signup() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
     // Snack bar open/close function
-  const handleClick = () => { setOpen(true); };
+  const handleClick = () => { setOpen(true); setProgress(0) };
   const handleClose = () => { setOpen(false); };
 
   // Password functionality
@@ -170,7 +173,7 @@ function Signup() {
   };
 
   // Validation
-  let validation = yup.object({
+  let validation = yup.object({ // eslint-disable-next-line
     Mailid: yup.string().matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email').required('Required Field'),
     Password: yup.string().min(8, 'Minimum 8 Characters Required').required('Required Field')
   });
@@ -178,7 +181,7 @@ function Signup() {
   const { handleBlur, handleSubmit, handleChange, errors, touched, values } = useFormik({
     initialValues: { Mailid: '', Password: '' },
     validationSchema: validation,
-    onSubmit: (userData) => login(userData)
+    onSubmit: (userData) => {login(userData);setProgress(1)}
   });
 
   // Login Request
@@ -187,7 +190,7 @@ function Signup() {
       url: `${URL}/login`,
       method: 'POST',
       data: userData
-    }).then((response) => setResult(() => response)).then(() => history.push('/Dashboard'))
+    }).then((response) => setResult(() => response)).then(() => {history.push('/Dashboard');setProgress(0)})
       .catch((error) => (setMessage({ msg: error.response.data, result: 'error' }))).then(handleClick)
   };
 // Only if the login status is successful,the page leads to dashboard or it shows error msg 
@@ -219,7 +222,7 @@ function Signup() {
           helperText={errors.Password && touched.Password && errors.Password} className='loginfield' name='Password' id='Password' 
           label="Password" variant="outlined" type={visible} fullWidth placeholder="Enter the Password"
           InputProps={{
-            endAdornment: (<InputAdornment>
+            endAdornment: (<InputAdornment position="start">
               <Tooltip title={text}>
                 <IconButton onClick={() => visibility()}>
                   {icon}
@@ -237,6 +240,7 @@ function Signup() {
         <Button type='submit' id='signup' color='success' variant="contained" onClick={() => history.push('/signup')}>Sign Up</Button>
       </div>
     </Card>
+    {(progress === 1) && <CircularProgress id='loginprogress' color='primary'></CircularProgress>}
 
     {/* Snack Bar */}
     <Stack spacing={2} sx={{ width: '100%' }}>
@@ -270,7 +274,7 @@ function Signup() {
   // Validation
   let validation = yup.object({
     Mailid: yup
-      .string() // eslint-disable-line
+      .string()  // eslint-disable-next-line
       .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,"Must Be a Valid Email")
       .required("Required Field"), 
   });

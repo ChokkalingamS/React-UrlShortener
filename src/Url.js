@@ -285,7 +285,6 @@ function Info({ createdAt, lastUpdated, usedCount, deleteUrl, shortUrl, editUrl,
 
 // Update URL
   function Update() {
-  const { token } = useContext(context);
   const { id } = useParams(); // ObjectId of individual URL
   // To store individual URL
   const [data, setData] = useState(null);
@@ -296,7 +295,7 @@ function Info({ createdAt, lastUpdated, usedCount, deleteUrl, shortUrl, editUrl,
       method: 'GET',
     }).then((response) => setData(response.data));
   };
-  useEffect(getData, []);
+  useEffect(getData, [id]);
 
 // Loading Status on condional rendering
 // renders if the data is empty

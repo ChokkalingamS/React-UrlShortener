@@ -57,6 +57,13 @@ body{
   margin-top:-3rem !important;
 }
 
+#loginprogress
+{
+  margin-top:6rem;
+  margin-left:46rem;
+  position: absolute;
+}
+
 /* Forgot button */
 .forgotsignupbutton
 {
