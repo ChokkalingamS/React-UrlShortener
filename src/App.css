@@ -132,6 +132,9 @@ body{
   height:18rem;
   width:25rem;
   margin:10rem auto;
+  box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.75) !important;
+  -webkit-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.75) !important;
+  -moz-box-shadow: 10px 10px 5px -4px rgba(216, 168, 168, 0.75) !important;
 }
 .forgotfield
 {
@@ -174,6 +177,9 @@ body{
   height:16.8rem;
   width:25rem;
   margin:10rem auto;
+  box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.75) !important;
+  -webkit-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.75) !important;
+  -moz-box-shadow: 10px 10px 5px -4px rgba(216, 168, 168, 0.75) !important;
 }
 .changepasswordfield
 {
