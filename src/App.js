@@ -525,7 +525,7 @@ function Changepassword()
         <Button type='submit'  variant="contained" fullWidth className='changepasswordbutton' color='warning'>Change Password</Button>
         </form>
         </Card>
-        {(progress===0)&&<CircularProgress id='changepasswordprogress' color='warning'></CircularProgress>}
+        {(progress===1)&&<CircularProgress id='changepasswordprogress' color='warning'></CircularProgress>}
           {/* Snack Bar */}
           <Stack spacing={2} sx={{ width: '100%' }} >
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} >

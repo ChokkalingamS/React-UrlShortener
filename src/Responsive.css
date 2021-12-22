@@ -22,8 +22,8 @@
 }
 #signupprogress
 {
-  margin-Left:2rem;
-  margin-Bottom:-41rem;
+  margin-Left:2.5rem;
+  margin-Bottom:-43rem;
   margin-Top:1rem;
   position:absolute;
   z-index:1;
@@ -82,7 +82,7 @@
 
 #changepasswordprogress
 {
-  margin-left:22rem ;
+  margin-left:21rem ;
   margin-Top:-13.5rem;
   position:absolute;
   z-index:1;
