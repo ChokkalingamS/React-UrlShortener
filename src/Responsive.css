@@ -333,18 +333,18 @@
 }
 .avatar
 {
-    margin-left:8.6rem !important;
+    margin-left:9rem !important;
     margin-right: 0 !important;
 }
 
 .urlbox1
 {
-    width:15.2rem !important;
+    width:17.2rem !important;
     /* margin-left:1rem!important; */
 }
 .urlbox2
 {
-    width:21rem !important;
+    width:21.5rem !important;
 }
 
 .customcheckbox
@@ -366,7 +366,7 @@
 
 .editlongurl,.editcustomurl,.savebutton,.cancel
 {
-    width:21rem;
+    width:21.5rem;
 }
 .editdashboard
 {
