@@ -235,7 +235,7 @@
 #loginprogress
 {
     position: absolute;
-    margin-top:2rem;
+    margin-top:15rem;
     margin-left:-1rem;
 }
 .headingcontainer
@@ -360,11 +360,18 @@
 }
 
 /* URL Page */
-#dataprogress,#editprogress
+#dataprogress
 {
   margin-Left:6.5rem;
-  margin-Top:5rem
+  margin-Top:5rem;
 }
+
+#editprogress
+{
+    margin-Left:11rem;
+    margin-Top:9rem;
+}
+  
 
 /* Edit URL Page */
 .editlongurl,.editcustomurl,.savebutton,.cancel
